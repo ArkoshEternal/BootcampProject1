@@ -85,7 +85,7 @@ public class Proj1 {
                grid[i][j].setDirection("R"); // set direction to "R" for router
             }
             else {
-               grid[i][j].setDirection(direction(i, j, routerRow, routerCol));
+               grid[i][j].setDirection(direction(routerRow, routerCol, i, j));
             }
          }
       }
@@ -127,11 +127,12 @@ public class Proj1 {
       for (int i = 0; i < current.length; i++) {
          for (int j = 0; j < current[0].length; j++) {
             if (i == routerRow && j == routerCol) {
-               current[i][j].setSignal(23); // if router, set signal strength to 23
+               current[i][j].setSignal(23); // this is redundant
             }
             else {
-               current[i][j].setSignal(23 - previous[i][j].getRate() + fspl(previous[i][j].getDistance(),
-                       5000000.0));
+               current[i][j].setSignal(23 - (previous[i][j].getRate() + (fspl(previous[i][j].getDistance(),
+                       5000000.0))));
+               current[i][j].setRate(attenRate(previous, i, j));
             }
          }
       }
@@ -144,7 +145,7 @@ public class Proj1 {
     */
    public static double fspl(double distance, double frequency) {
    // TODO: write this method body -- done
-      return (20*Math.log(distance)) + (20*Math.log(frequency)) + 92.45;
+      return ((20*Math.log10(distance)) + (20*Math.log10(frequency)) + 92.45);
    }
    
    /** Calculate the attenuation rate of a cell based on the
@@ -263,11 +264,11 @@ public class Proj1 {
    public static void read(Cell[][] grid, Scanner scnr) throws IOException {
    // TODO: write the body of this method
       //throw new IOException("File cannot be read");
-      int length = scnr.nextInt();
-      int width = scnr.nextInt();
-      for(int i = 0; i < length; i++) {
-         for(int j = 0; j < width; j++) {
-            grid[i][j].setWalls(scnr.next());
+      //int length = scnr.nextInt();
+      //int width = scnr.nextInt();
+      for (Cell[] cells : grid) {
+         for (int j = 0; j < grid[0].length; j++) {
+            cells[j].setWalls(scnr.next());
          }
       }
    }
