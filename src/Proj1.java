@@ -130,9 +130,10 @@ public class Proj1 {
                current[i][j].setSignal(23); // this is redundant
             }
             else {
-               current[i][j].setSignal(23 - (previous[i][j].getRate() + (fspl(previous[i][j].getDistance(),
-                       5000000.0))));
                current[i][j].setRate(attenRate(previous, i, j));
+               current[i][j].setSignal(23 - (current[i][j].getRate() + (fspl(previous[i][j].getDistance(),
+                       5.0))));
+
             }
          }
       }
