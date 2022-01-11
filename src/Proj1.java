@@ -123,8 +123,18 @@ public class Proj1 {
     */         
    public static void iterate(Cell[][] current, Cell[][] previous,  
                               int routerRow, int routerCol) {
-   // TODO: write this method body  
-
+   // TODO: write this method body -- done
+      for (int i = 0; i < current.length; i++) {
+         for (int j = 0; j < current[0].length; j++) {
+            if (i == routerRow && j == routerCol) {
+               current[i][j].setSignal(23); // if router, set signal strength to 23
+            }
+            else {
+               current[i][j].setSignal(23 - previous[i][j].getRate() + fspl(previous[i][j].getDistance(),
+                       5000000.0));
+            }
+         }
+      }
    }
    
    /** Calculate the signal transmission free space path loss (FSPL).
