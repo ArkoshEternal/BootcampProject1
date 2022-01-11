@@ -148,37 +148,27 @@ public class Proj1 {
    // TODO: write this method body -- done
       String tempString;
       tempString = prev[row][col].getDirection();
-      switch(tempString) {
+      return switch (tempString) {
          // if the cell is north of the router cell
-         case "N":
-            return prev[row+1][col].getRate() + attenuation(prev[row][col].getSouth());
+         case "N" -> prev[row + 1][col].getRate() + attenuation(prev[row][col].getSouth());
          // if the cell is south of the router cell
-         case "S":
-            return prev[row-1][col].getRate() + attenuation(prev[row][col].getNorth());
+         case "S" -> prev[row - 1][col].getRate() + attenuation(prev[row][col].getNorth());
          // if the cell is east of the router cell
-         case "E":
-            return prev[row][col-1].getRate() + attenuation(prev[row][col].getWest());
+         case "E" -> prev[row][col - 1].getRate() + attenuation(prev[row][col].getWest());
          // if the cell is west of the router cell
-         case "W":
-            return prev[row][col+1].getRate() + attenuation(prev[row][col].getEast());
+         case "W" -> prev[row][col + 1].getRate() + attenuation(prev[row][col].getEast());
          // if the cell is north-east of the router cell
-         case "NE":
-            return Math.max(prev[row+1][col].getRate(), prev[row][col-1].getRate()) + Math.max(attenuation(prev[row][col].getSouth()), attenuation(prev[row][col].getWest()));
+         case "NE" -> Math.max(prev[row + 1][col].getRate(), prev[row][col - 1].getRate()) + Math.max(attenuation(prev[row][col].getSouth()), attenuation(prev[row][col].getWest()));
          // if the cell is north-west of the router cell
-         case "NW":
-            return Math.max(prev[row+1][col].getRate(), prev[row][col+1].getRate()) + Math.max(attenuation(prev[row][col].getSouth()), attenuation(prev[row][col].getEast()));
+         case "NW" -> Math.max(prev[row + 1][col].getRate(), prev[row][col + 1].getRate()) + Math.max(attenuation(prev[row][col].getSouth()), attenuation(prev[row][col].getEast()));
          // if the cell is south-east of the router cell
-         case "SE":
-            return Math.max(prev[row-1][col].getRate(), prev[row][col-1].getRate()) + Math.max(attenuation(prev[row][col].getNorth()), attenuation(prev[row][col].getWest()));
+         case "SE" -> Math.max(prev[row - 1][col].getRate(), prev[row][col - 1].getRate()) + Math.max(attenuation(prev[row][col].getNorth()), attenuation(prev[row][col].getWest()));
          // if the cell is south-west of the router cell
-         case "SW":
-            return Math.max(prev[row-1][col].getRate(), prev[row][col+1].getRate()) + Math.max(attenuation(prev[row][col].getNorth()), attenuation(prev[row][col].getEast()));
+         case "SW" -> Math.max(prev[row - 1][col].getRate(), prev[row][col + 1].getRate()) + Math.max(attenuation(prev[row][col].getNorth()), attenuation(prev[row][col].getEast()));
          // if the cell is the router cell
-         case "R":
-            return 0;
-         default:
-            return 0;
-      }
+         case "R" -> 0;
+         default -> 0;
+      };
 
    }
     
@@ -262,6 +252,7 @@ public class Proj1 {
     */
    public static void read(Cell[][] grid, Scanner scnr) throws IOException {
    // TODO: write the body of this method
+      //throw new IOException("File cannot be read");
       int length = scnr.nextInt();
       int width = scnr.nextInt();
       for(int i = 0; i < length; i++) {
@@ -321,7 +312,16 @@ public class Proj1 {
     */
    public static double findMinSignal(Cell[][] grid) {
    // TODO: write the body of this method
-      return 0;
+      double minSignal;
+      minSignal= grid[0][0].getSignal();
+      for (Cell[] cells : grid) {
+         for (int j = 0; j < grid[0].length; j++) {
+            if (cells[j].getSignal() < minSignal) {
+               minSignal = cells[j].getSignal();
+            }
+         }
+      }
+      return minSignal;
    }
    
    /** Print the coordinates of cells with <= the minimum signal strength,
@@ -331,7 +331,14 @@ public class Proj1 {
     */
    public static void printMinCellCoordinates(Cell[][] grid, double minSignal) {
    // TODO: write the body of this method
-   
+      for(int i = 0; i< grid.length; i++){
+         for(int j = 0; j<grid[0].length; j++) {
+            if (grid[i][j].getSignal() == minSignal) {
+               System.out.println(i + ", " + j);
+            }
+         }
+      }
+
    }
 
    /** Get the attenuation rate of a wall material.
