@@ -91,7 +91,7 @@ public class Proj1 {
       for (int i = 0; i < grid.length; i++) {
          for (int j = 0; j < grid[i].length; j++) {
             if (i == routerRow && j == routerCol) {
-               grid[i][j].setDirection("--"); // set direction to "R" for router
+               grid[i][j].setDirection("--");
             } else {
                grid[i][j].setDirection(direction(routerRow, routerCol, i, j));
             }
@@ -188,24 +188,24 @@ public class Proj1 {
          case "W":  return prev[row][col + 1].getRate() +
             attenuation(prev[row][col].getEast());
          // if the cell is north-east of the router cell
-         case "NE": return Math.max(prev[row + 1][col].getRate(),
-            prev[row][col - 1].getRate()) +
-            Math.max(attenuation(prev[row][col].getSouth()),
-               attenuation(prev[row][col].getWest()));
+         case "NE": return Math.max(prev[row + 1][col].getRate() +
+            attenuation(prev[row][col].getSouth()),
+            prev[row][col - 1].getRate() +
+            attenuation(prev[row][col].getWest()));
          // if the cell is north-west of the router cell
-         case "NW": return Math.max(prev[row + 1][col].getRate(),
-            prev[row][col + 1].getRate()) +
-            Math.max(attenuation(prev[row][col].getSouth()),
-               attenuation(prev[row][col].getEast()));
+         case "NW": return Math.max(prev[row + 1][col].getRate() +
+            attenuation(prev[row][col].getSouth()),
+            prev[row][col + 1].getRate() +
+            attenuation(prev[row][col].getEast()));
          // if the cell is south-east of the router cell
-         case "SE": return Math.max(prev[row - 1][col].getRate(),
-            prev[row][col - 1].getRate()) +
-            Math.max(attenuation(prev[row][col].getNorth()),
+         case "SE": return Math.max(prev[row - 1][col].getRate() +
+               attenuation(prev[row][col].getNorth()),
+               prev[row][col - 1].getRate() +
                attenuation(prev[row][col].getWest()));
          // if the cell is south-west of the router cell
-         case "SW": return Math.max(prev[row - 1][col].getRate(),
-            prev[row][col + 1].getRate()) +
-            Math.max(attenuation(prev[row][col].getNorth()),
+         case "SW": return Math.max(prev[row - 1][col].getRate() +
+               attenuation(prev[row][col].getNorth()),
+               prev[row][col + 1].getRate() +
                attenuation(prev[row][col].getEast()));
          // if the cell is the router cell
          default: return 0;
