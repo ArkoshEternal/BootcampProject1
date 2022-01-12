@@ -61,7 +61,7 @@ public class Cell {
    
     
    /**
-    * The the type of the north wall.
+    * The type of the north wall.
     * @return the type
     */
    public char getNorth() {
