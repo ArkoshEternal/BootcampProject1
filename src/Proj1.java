@@ -377,8 +377,8 @@ public class Proj1 {
    public static void printMinCellCoordinates(Cell[][] grid, double minSignal) {
       for (int i = 0; i < grid.length; i++) {
          for (int j = 0; j < grid[0].length; j++) {
-            if (grid[i][j].getSignal() == minSignal) {
-               System.out.println(i + ", " + j);
+            if (grid[i][j].getSignal() <= minSignal) {
+               System.out.println("(" + i + ", " + j +")");
             }
          }
       }
